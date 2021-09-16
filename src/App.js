@@ -1,66 +1,59 @@
-import PropTypes from "prop-types";
+import React from "react";
+import axios from "axios";
+import Movie from "./Movie";
+import "./App.css";
 
-const foodILike = [
-  {
-    id:1,
-    name: "Kimchi",
-    image:
-      "http://aeriskitchen.com/wp-content/uploads/2008/09/kimchi_bokkeumbap_02-.jpg",
-    rating:3.9
-  },
-  {
-    id:2,
-    name: "Samgyeopsal",
-    image:
-      "https://3.bp.blogspot.com/-hKwIBxIVcQw/WfsewX3fhJI/AAAAAAAAALk/yHxnxFXcfx4ZKSfHS_RQNKjw3bAC03AnACLcBGAs/s400/DSC07624.jpg",
-    rating:4.2
-  },
-  {
-    id:3,
-    name: "Bibimbap",
-    image:
-      "http://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/image/recipes/ck/12/03/bibimbop-ck-x.jpg?itok=RoXlp6Xb.jpg",
-    rating:4.3
-  },
-  {
-    id:4,
-    name: "Doncasu",
-    image:
-      "https://s3-media3.fl.yelpcdn.com/bphoto/7F9eTTQ_yxaWIRytAu5feA/ls.jpg",
-    rating:2.5
-  },
-  {
-    
-    id:5,
-    name: "Kimbap",
-    image:
-      "http://cdn2.koreanbapsang.com/wp-content/uploads/2012/05/DSC_1238r-e1454170512295.jpg",
-    rating:3.8
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+  };
+  getMovies = async () => {
+    // 기다렸다가 작업이 끝난 뒤에 해야 하기 때문에 async 사용
+    const {
+      data: {
+        data: { movies },
+      },
+    } = await axios.get(
+      // 기다려야 하는 곳에 await 넣기
+      "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
+    );
+    this.setState({ movies, isLoading: false });
+  };
+  // rendering이 성공적으로 실행되면 이 함수가 실행됨.
+  componentDidMount() {
+    this.getMovies();
   }
-];
-function Food({name, picture, rating}){
-  return (
-  <div>
-    <h2>I like {name}</h2>
-    <h4>{rating}/5.0</h4>
-    <img src={picture} alt={name} /> 
-  </div>
-  )
-}
-// 내가 전달받은 props가 내가 원하는 props인지 확인해준다.
-Food.propTypes = {
-  name : PropTypes.string.isRequired,
-  picture : PropTypes.string.isRequired,
-  rating : PropTypes.number.isRequired,
-};
-
-function App() {
-  return (
-    <div>
-      <h1>Hello</h1>
-      {foodILike.map(dish => <Food key={dish.id} name= {dish.name} picture = {dish.image} rating = {dish.rating}/>)}
-    </div>
-  );
+  render() {
+    const { isLoading, movies } = this.state;
+    return (
+      // HTML 코드 작성
+      // 이건 어쨌든 jsx이기 때문에(not HTML) class 대신 className사용해야함.
+      <section className="container">
+        {isLoading ? (
+          <div className="loader">
+            <span className="loader__text">Loading...</span>
+          </div>
+        ) : (
+          <div className="movies">
+            {movies.map((movie) => (
+              // map 함수 : 배열 내의 모든 요소 각각에 대하여 주어진 함수를 호출한 결과를 모아 새로운 배열 반환
+              // Movie에 인자 넘겨주기
+              <Movie
+                key={movie.id}
+                id={movie.id}
+                year={movie.year}
+                title={movie.title}
+                summary={movie.summary}
+                poster={movie.medium_cover_image}
+                genres={movie.genres}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    );
+  }
 }
 
 export default App;
