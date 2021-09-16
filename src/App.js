@@ -1,59 +1,27 @@
-import React from "react";
-import axios from "axios";
-import Movie from "./Movie";
-import "./App.css";
+import { HashRouter, Route } from "react-router-dom"; // 여러 종류의 router들이 있음
+/* router -> url 을 보고 js 실행
+  예를 들면 url이 /로 끝나면 Home.js를 실행한다거나 
+      /about 으로 끝나면 About.js를 실행한다거나 해줌
+*/
+import About from "./routes/About";
+import Home from "./routes/Home";
+import Detail from "./routes/Detail";
+import Navigation from "./components/Navigations";
 
-class App extends React.Component {
-  state = {
-    isLoading: true,
-    movies: [],
-  };
-  getMovies = async () => {
-    // 기다렸다가 작업이 끝난 뒤에 해야 하기 때문에 async 사용
-    const {
-      data: {
-        data: { movies },
-      },
-    } = await axios.get(
-      // 기다려야 하는 곳에 await 넣기
-      "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
-    );
-    this.setState({ movies, isLoading: false });
-  };
-  // rendering이 성공적으로 실행되면 이 함수가 실행됨.
-  componentDidMount() {
-    this.getMovies();
-  }
-  render() {
-    const { isLoading, movies } = this.state;
-    return (
-      // HTML 코드 작성
-      // 이건 어쨌든 jsx이기 때문에(not HTML) class 대신 className사용해야함.
-      <section className="container">
-        {isLoading ? (
-          <div className="loader">
-            <span className="loader__text">Loading...</span>
-          </div>
-        ) : (
-          <div className="movies">
-            {movies.map((movie) => (
-              // map 함수 : 배열 내의 모든 요소 각각에 대하여 주어진 함수를 호출한 결과를 모아 새로운 배열 반환
-              // Movie에 인자 넘겨주기
-              <Movie
-                key={movie.id}
-                id={movie.id}
-                year={movie.year}
-                title={movie.title}
-                summary={movie.summary}
-                poster={movie.medium_cover_image}
-                genres={movie.genres}
-              />
-            ))}
-          </div>
-        )}
-      </section>
-    );
-  }
+function App() {
+  return (
+    // BrowerRouter는 url에 /#/가 없지만 gh-pages를 설정할 때에 편리하게 하기 위해 HashRouter사용
+    <HashRouter>
+      {/* Navigations 만들기 Router밖에서는 
+        Navigation(Link를 사용하기 때문에)이 작동하지 않음 */}
+      <Navigation />
+      <Route path="/" exact={true} component={Home} />{" "}
+      {/* exact => 정확히(exact) "/"" 인 url만 render */}
+      {/* Route내에는 렌더링할 스크린과 뭘 할지 정해주는 props가 들어감 */}
+      <Route path="/about" component={About} />
+      <Route path="/movie/:id" component={Detail} />
+    </HashRouter>
+  );
 }
 
 export default App;
