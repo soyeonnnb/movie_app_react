@@ -1,0 +1,66 @@
+a {
+  text-decoration: none;
+}
+.movies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.movie {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  width: 650px;
+  height: 320px;
+  margin: 50px 30px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.movie:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.moive__data {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+}
+.movie__img {
+  width: 200px;
+  border-radius: 5px;
+  position: absolute;
+  top: -35px;
+  left: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.171), 0 7px 6px rgba(0, 0, 0, 0.103);
+}
+.movie__title {
+  font-size: 25px;
+  font-weight: 600;
+  margin: 12px 0 10px 0;
+  color: black;
+}
+.movie__year,
+.genres,
+.movie_summary {
+  font-size: 17px;
+  font-weight: 400;
+  margin: 0;
+  color: rgb(146, 146, 146);
+}
+.movie__year {
+  margin-bottom: 10px;
+}
+.genres {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+.genres_genre {
+  margin-right: 10px;
+}
+.movie_summary {
+  font-size: 18px;
+}

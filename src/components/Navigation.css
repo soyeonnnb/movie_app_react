@@ -1,0 +1,22 @@
+.navigation {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 10px 0 50px 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.24);
+}
+.navigation__link {
+  padding: 7px 10px;
+  border-radius: 5px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.navigation__link:hover {
+  background-color: rgba(120, 102, 219, 0.808);
+  color: white;
+}
+.navigation:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+}

@@ -16,7 +16,7 @@ class Home extends React.Component {
       },
     } = await axios.get(
       // 기다려야 하는 곳에 await 넣기
-      "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
+      "https://yts-proxy.nomadcoders1.now.sh/list_movies.json?sort_by=rating"
     );
     this.setState({ movies, isLoading: false });
   };
@@ -47,6 +47,8 @@ class Home extends React.Component {
                 summary={movie.summary}
                 poster={movie.medium_cover_image}
                 genres={movie.genres}
+                rating={movie.rating}
+                runtime={movie.runtime}
               />
             ))}
           </div>

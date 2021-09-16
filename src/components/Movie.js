@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./Movie.css";
 
-function Movie({ id, year, title, summary, poster, genres }) {
+function Movie({ id, year, title, summary, poster, genres, rating, runtime }) {
   return (
     <div className="movie">
       <Link
@@ -14,10 +14,12 @@ function Movie({ id, year, title, summary, poster, genres }) {
             summary,
             poster,
             genres,
+            rating,
+            runtime,
           },
         }}
       >
-        <img src={poster} alt={title} title={title} />
+        <img src={poster} className="movie__img" alt={title} title={title} />
         <div className="moive__data">
           <h3 className="movie__title">{title}</h3>
           <h5 className="movie__year">{year}</h5>
@@ -33,7 +35,7 @@ function Movie({ id, year, title, summary, poster, genres }) {
               )
             )}
           </ul>
-          <p className="movie_summary">{summary.slice(0, 140)}...</p>{" "}
+          <p className="movie_summary">{summary.slice(0, 150)} ...</p>{" "}
           {/* slice를 사용해서 긴 문장 자르기 .slice(시작점, 끝점) */}
         </div>
       </Link>
@@ -48,6 +50,8 @@ Movie.propTypes = {
   summary: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired, // array는 이렇게 생성
+  rating: PropTypes.number.isRequired,
+  runtime: PropTypes.number.isRequired,
 };
 
 export default Movie;
